@@ -5,7 +5,7 @@
  * @format
  */
 
-import { StatusBar, StyleSheet, useColorScheme, View, Text, Alert } from 'react-native';
+import { StatusBar, StyleSheet, useColorScheme, View, Text, Alert, TouchableOpacity } from 'react-native';
 import {
   SafeAreaProvider,
   useSafeAreaInsets,
@@ -59,17 +59,27 @@ function AppContent() {
     );
   };
 
+  // 處理取得比分按鈕點擊
+  const handleGetScore = () => {
+    Alert.alert(
+      '取得比分',
+      '比分功能已觸發！\n這裡可以顯示比賽比分或相關資訊。',
+      [{ text: '確定', style: 'default' }]
+    );
+  };
+
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerText}>預算管理系統</Text>
-        <Text style={styles.headerSubText}>管理您的月度預算</Text>
+      {/* 取得比分按鈕 - 位於畫面最上方 */}
+      <View style={styles.topButtonContainer}>
+        <TouchableOpacity style={styles.scoreButton} onPress={handleGetScore}>
+          <Text style={styles.scoreButtonText}>取得比分</Text>
+        </TouchableOpacity>
       </View>
-      <BudgetList
-        budgets={budgetData}
-        onBudgetPress={handleBudgetPress}
-        onBudgetDelete={handleBudgetDelete}
-      />
+
+      {/* <BudgetList budgets={budgetData} onBudgetPress={handleBudgetPress} onBudgetDelete={handleBudgetDelete} /> */}
+
+
     </View>
   );
 }
@@ -79,10 +89,38 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#f5f5f5',
   },
+  topButtonContainer: {
+    backgroundColor: '#ffffff',
+    paddingTop: 200,
+    paddingBottom: 16,
+    paddingHorizontal: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#e0e0e0',
+    alignItems: 'center',
+  },
+  scoreButton: {
+    backgroundColor: '#007AFF',
+    paddingHorizontal: 32,
+    paddingVertical: 14,
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  scoreButtonText: {
+    color: '#ffffff',
+    fontSize: 18,
+    fontWeight: '600',
+  },
   header: {
     alignItems: 'center',
     paddingVertical: 20,
-    paddingTop: 40,
+    paddingTop: 20,
     backgroundColor: '#ffffff',
     borderBottomWidth: 1,
     borderBottomColor: '#e0e0e0',
