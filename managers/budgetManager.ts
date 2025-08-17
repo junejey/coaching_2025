@@ -34,18 +34,16 @@ export class BudgetManager {
           const budgetMonth = budgetDate.getMonth();
           
           // 計算該預算月份在區間內涵蓋的天數
-          const coveredDays = this.calculateCoveredDays(
+          const daysInMonth = this.calculateCoveredDays(
             budgetYear, 
             budgetMonth, 
             startDate, 
             endDate
           );
           
-          if (coveredDays > 0) {
-            // 獲取該月的總天數
-            const totalDaysInMonth = new Date(budgetYear, budgetMonth + 1, 0).getDate();
+          if (daysInMonth > 0) {
             // 按比例計算金額
-            return (budget.amount / totalDaysInMonth) * coveredDays;
+            return this.dailyAmount(budget.amount, daysInMonth) * daysInMonth;
           }
           return 0;
         })
@@ -54,6 +52,10 @@ export class BudgetManager {
       // 原有的無參數查詢 - 返回所有預算總額
       return this.budgets.reduce((total, budget) => total + budget.amount, 0);
     }
+  }
+
+  private dailyAmount(amount: number, totalDaysInMonth: number) {
+    return amount / totalDaysInMonth;
   }
 
   /**
