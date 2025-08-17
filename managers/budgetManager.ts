@@ -45,7 +45,7 @@ export class BudgetManager {
             // 獲取該月的總天數
             const totalDaysInMonth = new Date(budgetYear, budgetMonth + 1, 0).getDate();
             // 按比例計算金額
-            return (budget.amount * coveredDays) / totalDaysInMonth;
+            return (budget.amount / totalDaysInMonth) * coveredDays;
           }
           return 0;
         })
